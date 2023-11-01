@@ -1,14 +1,14 @@
-package org.pradheeparul.metrics;
+package com.pradheeparul.metrics;
 
 import java.util.List;
 import java.util.Map;
 
 /**
- * UniqueLoginMetric
+ * LoginMetric
  *
  * @author PradheepKumarA
  */
-public class UniqueLoginMetric implements Metric {
+public class LoginMetric implements Metric {
 
     private long totalUniqueLogins = 0L;
 

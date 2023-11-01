@@ -1,4 +1,4 @@
-package org.pradheeparul.storage;
+package com.pradheeparul.storage;
 
 import java.util.List;
 import java.util.Map;

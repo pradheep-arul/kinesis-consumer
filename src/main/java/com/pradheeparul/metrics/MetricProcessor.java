@@ -1,4 +1,4 @@
-package org.pradheeparul.metrics;
+package com.pradheeparul.metrics;
 
 
 import java.util.ArrayList;
@@ -11,26 +11,26 @@ import java.util.Map;
  * @author PradheepKumarA
  */
 public class MetricProcessor {
-    private List<Metric> metrics;
-    private String shardId;
+    private final List<Metric> metrics;
+    private final String shardId;
 
     public MetricProcessor(String shardId) {
         this.shardId = shardId;
         // Initialize the metric calculators
         metrics = new ArrayList<>();
-        metrics.add(new UniqueLoginMetric());
-        metrics.add(new UniqueCountryLoginMetric());
+        metrics.add(new LoginMetric());
+        metrics.add(new CountryLoginMetric());
+        // We could register more metrics in the future
     }
 
     public void processMetrics(List<Map<String, String>> records) {
-        // Notify all metric calculators when new data arrives
+        // Compute all registered metrics
         for (Metric calculator : metrics) {
             calculator.computeMetric(records);
         }
     }
 
     public void logMetrics() {
-        // Notify all metric calculators when new data arrives
         for (Metric calculator : metrics) {
             calculator.logMetrics(shardId);
         }

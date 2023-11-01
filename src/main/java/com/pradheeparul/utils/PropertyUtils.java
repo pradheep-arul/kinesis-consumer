@@ -1,4 +1,4 @@
-package org.pradheeparul.utils;
+package com.pradheeparul.utils;
 
 import java.util.ResourceBundle;
 

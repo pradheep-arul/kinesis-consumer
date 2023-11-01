@@ -1,15 +1,15 @@
-package org.pradheeparul.metrics;
+package com.pradheeparul.metrics;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 /**
- * UniqueCountryLoginMetric
+ * CountryLoginMetric
  *
  * @author PradheepKumarA
  */
-public class UniqueCountryLoginMetric implements Metric {
+public class CountryLoginMetric implements Metric {
 
 
     Map<String, Long> countryLogins = new HashMap<>();

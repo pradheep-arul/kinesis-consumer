@@ -1,4 +1,4 @@
-package org.pradheeparul.metrics;
+package com.pradheeparul.metrics;
 
 import java.util.List;
 import java.util.Map;

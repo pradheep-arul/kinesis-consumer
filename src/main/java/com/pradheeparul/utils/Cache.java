@@ -1,4 +1,4 @@
-package org.pradheeparul.utils;
+package com.pradheeparul.utils;
 
 
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +12,7 @@ import redis.clients.jedis.JedisPooled;
  */
 public class Cache {
     private static final Logger logger = LogManager.getLogger(Cache.class);
-    private static int CACHE_EXPIRE_TIME_IN_SECONDS = 24 * 60 * 60;
+    private static final int DEFAULT_CACHE_EXPIRE_TIME_IN_SECONDS = 24 * 60 * 60;
     private static JedisPooled cache;
 
     public static JedisPooled getInstance() {
@@ -25,20 +25,19 @@ public class Cache {
     }
 
     public static void set(String key, String value) {
+        set(key, value, DEFAULT_CACHE_EXPIRE_TIME_IN_SECONDS);
+    }
+
+    public static void set(String key, String value, int expireInSeconds) {
         try {
-            getInstance().setex(key, CACHE_EXPIRE_TIME_IN_SECONDS, value);
+            getInstance().setex(key, expireInSeconds, value);
         } catch (Exception ex) {
             logger.error("Error occurred while setting key: " + key, ex);
         }
-
     }
 
     public static String get(String key) {
         return getInstance().get(key);
-    }
-
-    public static boolean exists(String key) {
-        return getInstance().exists(key);
     }
 
 }

@@ -1,4 +1,4 @@
-package org.pradheeparul.storage;
+package com.pradheeparul.storage;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,22 +18,21 @@ public class DiskStorage implements Storage {
     private final Logger logger = LogManager.getLogger(DiskStorage.class);
     private final String LOGS_BASE_PATH = "./logs/";
 
+    public static LocalDateTime roundDownToNearest5Minutes() {
+        LocalDateTime time = LocalDateTime.now();
+        return time.minusMinutes(time.getMinute() % 5).withSecond(0).withNano(0);
+    }
+
     public void store(String shardId, List<Map<String, String>> records, String prefix) {
-        int count = 1;
         String filepath = LOGS_BASE_PATH + prefix + "-" + roundDownToNearest5Minutes() + ".log";
 
         try (FileWriter myWriter = new FileWriter(filepath, true)) {
             for (Map<String, String> record : records) {
-                myWriter.write(LocalDateTime.now() + " : " + shardId + " : " + count + " : " + record + "\n");
-                count++;
+                String logMessage = String.format("%s : %s : %s \n", LocalDateTime.now(), shardId, record);
+                myWriter.write(logMessage);
             }
         } catch (IOException e) {
-            logger.error("Error writing to permanent storage: " + e.getMessage(), e);
+            logger.error("Error writing to disk storage: " + e.getMessage(), e);
         }
-    }
-
-    public static LocalDateTime roundDownToNearest5Minutes() {
-        LocalDateTime time = LocalDateTime.now();
-        return time.minusMinutes(time.getMinute() % 5).withSecond(0).withNano(0);
     }
 }

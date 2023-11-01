@@ -1,4 +1,4 @@
-package org.pradheeparul.utils;
+package com.pradheeparul.utils;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.logging.log4j.LogManager;
@@ -6,7 +6,6 @@ import org.apache.logging.log4j.Logger;
 import software.amazon.awssdk.services.kinesis.model.Record;
 
 import java.io.IOException;
-import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -24,9 +23,8 @@ public class Decoder {
         List<Map<String, String>> result = new ArrayList<>();
         for (Record record : records) {
             byte[] byteArray = record.data().asByteArray();
-            String s = new String(byteArray, StandardCharsets.UTF_8);
             try {
-                Map<String, String> map = objectMapper.readValue(s, Map.class);
+                Map<String, String> map = objectMapper.readValue(byteArray, Map.class);
                 map.put("shardId", shardId);
                 map.put("sequenceNumber", record.sequenceNumber());
                 map.put("hashCode", HashUtils.getHashCode(byteArray));
